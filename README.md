@@ -17,7 +17,7 @@ Se você ainda não fez o download do código, clone o repositório no seu ambie
 ### 2. Construir a Imagem Docker
 No diretório onde se encontra o arquivo Dockerfile, execute o seguinte comando para criar a imagem Docker:
 
-` docker build -t jupyter-image . ` 
+` docker build -t jupyter . ` 
 
 Este comando cria uma imagem chamada `jupyter-image`, que será usada para iniciar o contêiner com o `Jupyter Notebook`.
 
@@ -25,7 +25,7 @@ Este comando cria uma imagem chamada `jupyter-image`, que será usada para inici
 * Para iniciar o contêiner com o Jupyter Notebook, execute o seguinte comando:
 
 
-`docker  run -d --rm --name jupyter -p 8888:8888 -v "$(pwd)/ProjetoDocker:/home/notebooks" jupyter-image` 
+`docker  run -d --rm --name jupyter -p 1234:1234 -v "$(pwd)/ProjetoDocker:/home/notebooks" jupyter-image` 
 
 
 Explicação dos parâmetros usados:
@@ -34,14 +34,16 @@ Explicação dos parâmetros usados:
 
 --rm: Remove automaticamente o contêiner .
 
--p 8888:8888: Mapeia a porta local 8888 onde o Jupyter Notebook estará disponível.
+-p 1234:1234: Mapeia a porta local 1234 onde o Jupyter Notebook estará disponível.
+
+-v Indica o caminho de onde serão salvos os volumes do diretório do conteiner para o diretório da máquina host.
 
 ``` 
 
 ### 4. Acessar o Jupyter Notebook
 Após iniciar o contêiner, abra seu navegador e acesse o Jupyter Notebook em:
 
-`http://localhost:8888`
+`http://localhost:1234`
 
 Você verá uma página de login. O token de autenticação estará nos logs do contêiner, que você pode acessar com:
 ` docker container logs  jupyter ` 
@@ -59,6 +61,8 @@ O volume criado é montado no caminho `/home/notebooks`  dentro do contêiner, c
 ### 2. Tamanho da Imagem vs. Tamanho do Contêiner em Execução
 Tamanho da Imagem: Após construir a imagem com o comando ` docker build` , o tamanho da imagem jupyter-image pode ser verificado com:
 ` docker images jupyter-image` 
+É mostrado um tamanho real e um virtual, o tamanho virtual indica o tamanho da imagem por si só, já o tamanho real irá indicar o tamanho do contêiner enquanto executa a imagem.
+
 Tamanho do Contêiner em Execução: Para verificar o uso real de espaço em disco pelo contêiner em execução, utilize:
 
 ` docker ps -s --filter "name=jupyter"` 
@@ -70,8 +74,10 @@ O uso de memória do contêiner pode ser monitorado em tempo real com o comando:
 
 Este comando exibe a quantidade de memória utilizada pelo contêiner, além de outras métricas como uso de CPU e I/O. 
 
+Para o teste de uso de memória em tempo real é possível criar um código genérico de uso de memória e avaliar o requisito da memória dentro do conteiner.
+
 ### 4. Tempo de Inicialização
 Para avaliar o tempo de inicialização, observe o tempo que o comando `time docker run` leva para colocar o contêiner em execução e abrir o servidor Jupyter. Em geral, o tempo de inicialização demorou 
-> real    0m0.588s \
-user    0m0.005s    \
-sys     0m0.030s
+> real    0m8.410s \
+user    0m0.037s    \
+sys     0m0.019s
