@@ -81,9 +81,3 @@ Para avaliar o tempo de inicialização, observe o tempo que o comando `time doc
 > real    0m8.410s \
 user    0m0.037s    \
 sys     0m0.019s
-
-### 4. Tempo de Inicialização
-Para avaliar o tempo de inicialização, observe o tempo que o comando `time docker run` leva para colocar o contêiner em execução e abrir o servidor Jupyter. Em geral, o tempo de inicialização demorou 
-> real    0m0.588s \
-user    0m0.005s    \
-sys     0m0.030s
